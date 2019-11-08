@@ -31,7 +31,8 @@ btns[i].className='active'
 
 
 
-function makeRequest(url) {
+function makeRequest(e, url) {
+        e.preventDefault();
         var httpRequest = false;
 
         if (window.XMLHttpRequest) { // Mozilla, Safari, ...
@@ -76,7 +77,7 @@ function makeRequest(url) {
 
 
 
-
+/*
 
 var tasks=document.querySelectorAll(".tasks .addTask")
 for (var i = 0; i < tasks.length; i++) {
@@ -91,4 +92,4 @@ for (var i = 0; i < tasks.length; i++) {
 
     }
   })
-}
+}*/

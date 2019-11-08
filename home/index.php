@@ -18,7 +18,7 @@
         $link=mysqli_connect("localhost", "adil", "221634adil", "test");
         if (isset($_COOKIE['id']) and isset($_COOKIE['hash']))
         {
-            $query = mysqli_query($link, "SELECT *,INET_NTOA(user_ip) AS user_ip FROM user WHERE user_id = '".intval($_COOKIE['id'])."' LIMIT 1");
+            $query = mysqli_query($link, "SELECT * FROM user WHERE user_id = '".intval($_COOKIE['id'])."' LIMIT 1");
             $userdata = mysqli_fetch_assoc($query);
             echo $userdata['user_login'];
         }
