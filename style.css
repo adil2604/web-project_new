@@ -1,0 +1,213 @@
+@import url('https://fonts.googleapis.com/css?family=Josefin+Sans:400,600&display=swap');
+
+@import url('https://fonts.googleapis.com/css?family=Baloo+Bhai&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Bree+Serif&display=swap');
+html,.navbar{
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    font-family: 'Bree Serif', serif;
+
+}
+html::selection{
+    background: red ;
+}
+body{
+    margin: 0;
+}
+p{
+    font-family: 'Baloo Bhai', cursive;
+    font-size: 1.4vw;
+
+}
+body{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.header{
+    width: 100%;
+    height: 60vw;
+    background-image: url('asserts/images/header.jpg');
+    background-position: bottom;
+    background-size: 80% 90%;
+    background-repeat: no-repeat;
+}
+
+nav{
+    width: 100%;
+    height: 4vw;
+}
+.navbar{
+    display: flex;
+    flex-direction: row;
+    /*//color: aliceblue;*/
+    align-items: center;
+    position: sticky;
+    top: 0;
+    left: 0;
+}
+.links{
+    width: 15%;
+    /*height: 30%;*/
+    margin-left: 55%;
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    justify-content: space-around;
+}
+.links a{
+    text-decoration: none;
+    text-align: center;
+    color: black;
+    font-size: 1.15vw;
+    outline: none;
+}
+.start{
+    border: 0;
+    outline: none;
+    background-color: rgba(0, 120, 215,0.7);
+    width: 10%;
+    height: 2vw;
+    margin-left: 1vw;
+    border-radius: 15px;
+    color: white;
+    font-size: 1vw;
+    font-family: 'Josefin Sans', sans-serif;
+    cursor: pointer;
+    transition: 0.5s;
+}
+.start:hover{
+    background-color: rgba(0, 120, 215,1);
+}
+.preview{
+    width: fit-content;
+    height: 5vw;
+    margin: 9vw auto 0 auto;
+    font-size: 3vw;
+    font-family: 'Bree Serif', serif;
+}
+.preview button{
+    margin-top: 2vw;
+    margin-left: 38%;
+    height: 2.3vw;
+    background-color:rgba(0, 120, 215,0.8) ;
+    width: 20%;
+}
+.preview::selection{
+    background:rgba(242, 225, 36,0.5) ;
+
+}
+.preview-box{
+    width: 100%;
+    height: 15vw;
+}
+.content{
+    width: 100%;
+    height: 76vw;
+}
+.content-box{
+    width: 100%;
+    height: 30vw;
+    background-image: url("asserts/images/review.jpg");
+    background-repeat: no-repeat ;
+    background-position: center;
+    background-size: 100% 100%;
+}
+.reviews{
+    padding-top:11%;
+    display: flex;
+    flex-direction: row;
+    height: 15vw;
+    justify-content: space-around;
+}
+.review{
+    width: 15%;
+    font-size: 1.4vw;
+
+}
+.review div{
+    margin-top: -2vw;
+}
+.star{
+    background-image: url("asserts/images/stars.png");
+    background-repeat: no-repeat;
+    background-position: 0% 25%;
+    background-size: 4.5vw 1vw;
+}
+.min{
+    margin-top: 1vw;
+    font-size: 1vw;
+
+}
+.main{
+    width: 100%;
+    height: 30vw;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    background-image: url("asserts/images/peace.png");
+    background-position: 15% 50%;
+    background-repeat: no-repeat;
+    background-size: 15% 100%;
+    overflow: visible;
+    flex-wrap: nowrap;
+
+}
+.x{
+    margin:0 auto 4vw 35vw;
+    width: 50%;
+
+}
+.main img{
+    width: 30%;
+    height: 100%;
+}
+.main-box{
+    width: 20%;
+    text-align: center;
+    margin-left: 40vw;
+    margin-bottom: 3vw;
+    background-image: url("asserts/icons/done.png");
+    background-size: 3vw 3vw ;
+    background-repeat: no-repeat;
+    background-position: 0 8%;
+    padding-left: 4vw;
+}
+footer{
+    background-color: rgba(0, 120, 215,0.07);
+    width: 100%;
+    height: 10vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+.footer{
+    width: 25%;
+    height: 100%;
+}
+.big{
+    margin:0 0 0 30%;
+    width: 40%;
+}
+.input{
+    border:1px solid rgba(0,0,0,0.3);
+    height: 2vw;
+    margin-left: 27%;
+    background-image: url("asserts/icons/email.png");
+    background-size: 1vw;
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 1.2vw;
+    background-repeat: no-repeat;
+    background-position: 5% 50%;
+    padding-left: 8%;
+}
+
+.marginz{
+    font-size: 1.4vw;
+    height: fit-content;
+    margin-bottom: 2vw;
+}
+.marginz ul,li{
+    font-size: 1vw;
+}

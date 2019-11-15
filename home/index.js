@@ -13,19 +13,62 @@ function setClass(div, className) {
     div[j].className=className
   }
 }
+function setCookie (name, value, expires, path, domain, secure) {
+      document.cookie = name + "=" + escape(value) +
+        ((expires) ? "; expires=" + expires : "") +
+        ((path) ? "; path=" + path : "") +
+        ((domain) ? "; domain=" + domain : "") +
+        ((secure) ? "; secure" : "");
+}
+function getCookie(name) {
+	var cookie = " " + document.cookie;
+	var search = " " + name + "=";
+	var setStr = null;
+	var offset = 0;
+	var end = 0;
+	if (cookie.length > 0) {
+		offset = cookie.indexOf(search);
+		if (offset != -1) {
+			offset += search.length;
+			end = cookie.indexOf(";", offset)
+			if (end == -1) {
+				end = cookie.length;
+			}
+			setStr = unescape(cookie.substring(offset, end));
+		}
+	}
+	return(setStr);
+}
+
 
 
 
 var btns=document.querySelectorAll(".tabs-box button")
+function setTab(i,location) {
+  switch (i) {
+    case 0:
+      location.search='tab=important&'
+      break;
+    case 1:
+      location.search='tab=today&'
+        break;
+    default:
+      break;
 
+  }
+}
 
 
 function setActive(i) {
-let content=document.querySelectorAll(".index")
-setClass(content,'index');
-content[i].className='index showing'
-setClass(btns,'');
-btns[i].className='active'
+  var currentLocation=window.location
+  setCookie('tab',i," 01-Jan-2020 00:00:00 GMT",'/')
+  setTab(i,currentLocation)
+  console.log(document.cookie);
+  // let content=document.querySelectorAll(".index")
+  // setClass(content,'index');
+  // //content[i].className='index showing'
+  // setClass(btns,'');
+  // btns[i].className='active'
 }
 
 
@@ -72,8 +115,7 @@ function makeRequest(e, url) {
         }
 
     }
-
-
+    
 
 
 
