@@ -12,3 +12,11 @@ for (let anchor of anchors) {
         })
     })
 }
+
+const startBtn=document.querySelectorAll('#start');
+for (let btn of startBtn){
+    btn.addEventListener('click',function () {
+        location.pathname='login/login.php'
+    })
+}
+
