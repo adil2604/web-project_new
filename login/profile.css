@@ -50,10 +50,22 @@ html,body,.profile-box{
 
 }
 .info{
-    background-color: blue;
-    width:50% ;
+    width:70% ;
     height: 80%;
     margin: 2vw 0 0 1vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+.email{
+    font-size: 1.4vw;
+    width: 70%;
+    height: 10%;
+}
+.email input{
+    border: 1px solid rgba(0,0,0,0.2);
+    width: 50%;
+    height: 50%;
 }
 .upload-btn-wrapper {
     margin: 7vw;

@@ -1,5 +1,4 @@
 
-
 <?php
 $tab='important';
 
@@ -9,22 +8,9 @@ if (!isset($_COOKIE['id']))
 if (isset($_GET['tab'])){
     $tab=$_GET['tab'];
 }
+$link=mysqli_connect("localhost", "adil", "221634adil", "test");
 
 ?>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -42,15 +28,7 @@ if (isset($_GET['tab'])){
           <input type="text" name="search-input" class="search-input" value="" placeholder="Search in tasks....">
           <input type="button" name=""  id="search"value="" style="border:0; width: 10%;height: 108%; margin:0">
         </form>
-        <?php
-        $link=mysqli_connect("localhost", "adil", "221634adil", "test");
-        if (isset($_COOKIE['id']) and isset($_COOKIE['hash']))
-        {
-            $query = mysqli_query($link, "SELECT * FROM user WHERE user_id = '".intval($_COOKIE['id'])."' LIMIT 1");
-            $userdata = mysqli_fetch_assoc($query);
-            echo $userdata['user_login'];
-        }
-         ?>
+
         <a href="<?php if (isset($_COOKIE['id'])){echo "../login/profile.php";}else {echo "../login/login.php";}  ?>" class="profile"  style="height: 100%;width: 5%;margin-right: 2vw;"></a>
       </nav>
     </section>

@@ -53,11 +53,10 @@ if (isset($_GET['logout'])) {
                 ?>
             </div>
             <div class="info">
-                <div class="email">Email: <div><?php echo $userdata['user_email']?></div></div>
+                <div class="email">Email: <?php echo $userdata['user_email']?></div>
                 <div class="email">First Name: <input id='name' type='text' value="<?php echo $userdata['user_name']?>"> </div>
-                <div class="email">Surname: <input id='surname' value="<?php echo $userdata['user_surname']?>" type='text'>"</div>
-                <div class="change">Change password: <input type="text" id="pass" placeholder="current password">
-                    <input type="text" id="newPass" placeholder="new password"></div>
+                <div class="email">Surname: <input id='surname' value="<?php echo $userdata['user_surname']?>" type='text'></div>
+                <div class="email">Change password: <br><div><input type="text" id="pass" placeholder="current password"><br><input type="text" id="newPass" placeholder="new password"></div></div>
                 <button type="button" id="save"  onclick="save()">Save</button>
                 <div id="error" class="error"></div>
 

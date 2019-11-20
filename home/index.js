@@ -47,11 +47,14 @@ var btns=document.querySelectorAll(".tabs-box button")
 function setTab(i,location) {
   switch (i) {
     case 0:
-      location.search='tab=important&'
+      location.search='tab=important&';
       break;
     case 1:
-      location.search='tab=today&'
+      location.search='tab=today&';
         break;
+      case 2:
+          location.search='tab=planned&';
+          break;
     default:
       break;
 
