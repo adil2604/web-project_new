@@ -11,6 +11,26 @@ $link = mysqli_connect("localhost", "adil", "221634adil", "test");
 $user = mysqli_query($link, "SELECT * FROM user WHERE user_id='" . $_COOKIE['id'] . "' LIMIT 1");
 $user = mysqli_fetch_assoc($user);
 $image_path = $user['image_path'];
+
+$data='';
+$total_pages=0;
+$pageno=1;
+function pagination($c, $type){
+    global $link,$data,$total_pages,$pageno;
+    if (isset($_GET['pageno'])) {
+        $pageno = $_GET['pageno'];
+    } else {
+        $pageno = 1;
+    }
+    $offset = ($pageno - 1) * $c;
+
+    $total_pages_sql = "SELECT COUNT(*) FROM test.tasks WHERE user_id = '" . $_COOKIE['id'] . "' AND Type=".$type." ";
+    $result = mysqli_query($link, $total_pages_sql);
+    $total_rows = mysqli_fetch_array($result)[0];
+    $total_pages = ceil($total_rows / $c);
+    $data = mysqli_query($link, "SELECT * FROM test.tasks WHERE user_id = '" . $_COOKIE['id'] . "' AND Type=".$type." LIMIT $offset, $c");
+
+}
 ?>
 
 <!DOCTYPE html>
@@ -58,48 +78,41 @@ $image_path = $user['image_path'];
             echo "class='index showing'";
         } else {
             echo "class='index'";
-        } ?> >
+        }
+        pagination(10,0);
+        ?> >
             <div class="info">
                 <div class="title">
-                    Important
-                    <?php
-                    $link = mysqli_connect("localhost", "adil", "221634adil", "test");
-                    if (isset($_GET['pageno'])) {
-                        $pageno = $_GET['pageno'];
-                    } else {
-                        $pageno = 1;
-                    }
-                    $no_of_records_per_page = 10;
-                    $offset = ($pageno - 1) * $no_of_records_per_page;
-
-                    $conn = $link;
-                    // Check connection
-                    if (mysqli_connect_errno()) {
-                        echo "Failed to connect to MySQL: " . mysqli_connect_error();
-                        die();
-                    }
-
-                    $total_pages_sql = "SELECT COUNT(*) FROM test.tasks WHERE user_id = '" . $_COOKIE['id'] . "' ";
-                    $result = mysqli_query($conn, $total_pages_sql);
-                    $total_rows = mysqli_fetch_array($result)[0];
-                    $total_pages = ceil($total_rows / $no_of_records_per_page);
-
-
-                    if (isset($_COOKIE['id'])) {
-                        echo $_COOKIE['id'];
-                        $query = mysqli_query($link, "SELECT * FROM test.tasks WHERE user_id = '" . $_COOKIE['id'] . "' AND Type=0 LIMIT $offset, $no_of_records_per_page");
-                        echo mysqli_num_rows($query);
-
-
-                    }
-                    ?>
+                    Important tasks
                 </div>
+                <ul class="pagination">
+                    <li class="<?php if ($pageno <= 1) {
+                        echo 'disabled';
+                    } ?>">
+                        <a href="<?php if ($pageno <= 1) {
+                            echo '#';
+                        } else {
+                            echo "?tab=important&pageno=" . ($pageno - 1);
+                        } ?>"><<</a>
+                    </li>
+                    <li class="<?php if ($pageno >= $total_pages) {
+                        echo 'disabled';
+                    } ?>">
+                        <a href="<?php if ($pageno >= $total_pages) {
+                            echo '#';
+                        } else {
+                            echo "?tab=important&pageno=" . ($pageno + 1);
+                        } ?>"> >> </a>
+                    </li>
+
+                </ul>
             </div>
             <div class="tasks">
                 <?php
+
                 $count = 10;
-                while (($rows = mysqli_fetch_assoc($query)) && ($count > 0)) {
-                    echo "<div class='task'><button type='button' onclick='resize(" . $rows['id'] . ")'>" . $rows['task'] . "</button></div>";
+                while (($rows = mysqli_fetch_assoc($data)) && ($count > 0)) {
+                    echo "<div class='task'><div class='check'  id='' onclick='done(".$rows['id'].")'></div><button type='button' id=".$rows['id']." onclick='resize(" . $rows['id'] . ")'>" . $rows['task'] . "</button></div>";
                     $count--;
                 }
                 for ($i = 0; $i < $count; $i++) {
@@ -109,51 +122,46 @@ $image_path = $user['image_path'];
 
 
             </div>
-            <ul class="pagination">
-                <li><a href="?tab=important&pageno=1">First</a></li>
-                <li class="<?php if ($pageno <= 1) {
-                    echo 'disabled';
-                } ?>">
-                    <a href="<?php if ($pageno <= 1) {
-                        echo '#';
-                    } else {
-                        echo "?tab=important&pageno=" . ($pageno - 1);
-                    } ?>">Prev</a>
-                </li>
-                <li class="<?php if ($pageno >= $total_pages) {
-                    echo 'disabled';
-                } ?>">
-                    <a href="<?php if ($pageno >= $total_pages) {
-                        echo '#';
-                    } else {
-                        echo "?tab=important&pageno=" . ($pageno + 1);
-                    } ?>">Next</a>
-                </li>
-                <li><a href="?tab=important&pageno=<?php echo $total_pages; ?>">Last</a></li>
-            </ul>
+
         </div>
         <div id="today" <?php if ($tab == "today") {
             echo "class='index showing'";
         } else {
             echo "class='index'";
-        } ?>>
+        }
+        pagination(10,1);
+        ?>>
             <div class="info">
-                <div class="">
-                    <h2>Today tasks</h2>
+                <div class="title">
+                    Today tasks
                 </div>
+                <ul class="pagination">
+                    <li class="<?php if ($pageno <= 1) {
+                        echo 'disabled';
+                    } ?>">
+                        <a href="<?php if ($pageno <= 1) {
+                            echo '#';
+                        } else {
+                            echo "?tab=today&pageno=" . ($pageno - 1);
+                        } ?>"><<</a>
+                    </li>
+                    <li class="<?php if ($pageno >= $total_pages) {
+                        echo 'disabled';
+                    } ?>">
+                        <a href="<?php if ($pageno >= $total_pages) {
+                            echo '#';
+                        } else {
+                            echo "?tab=today&pageno=" . ($pageno + 1);
+                        } ?>">>></a>
+                    </li>
+                </ul>
             </div>
             <div class="tasks">
                 <?php
-                $link = mysqli_connect("localhost", "adil", "221634adil", "test");
 
-                if (isset($_COOKIE['id'])) {
-                    echo $_COOKIE['id'];
-                    $query = mysqli_query($link, "SELECT * FROM test.tasks WHERE user_id = '" . $_COOKIE['id'] . "' AND Type=1 LIMIT $offset, $no_of_records_per_page");
-                    echo mysqli_num_rows($query);
-                }
                 $count = 10;
-                while (($rows = mysqli_fetch_assoc($query)) && ($count > 0)) {
-                    echo "<div class='task'><button type='button'>" . $rows['task'] . "</button></div>";
+                while (($rows = mysqli_fetch_assoc($data)) && ($count > 0)) {
+                    echo "<div class='task'><div class='check'></div><button type='button' id=".$rows['id']." onclick='resize(" . $rows['id'] . ")'>" . $rows['task'] . "</button></div>";
                     $count--;
                 }
                 for ($i = 0; $i < $count; $i++) {
@@ -163,28 +171,7 @@ $image_path = $user['image_path'];
 
             </div>
             <button type="button" name="button" onclick="resize()">open</button>
-            <ul class="pagination">
-                <li><a href="?tab=today&pageno=1">First</a></li>
-                <li class="<?php if ($pageno <= 1) {
-                    echo 'disabled';
-                } ?>">
-                    <a href="<?php if ($pageno <= 1) {
-                        echo '#';
-                    } else {
-                        echo "?tab=today&pageno=" . ($pageno - 1);
-                    } ?>">Prev</a>
-                </li>
-                <li class="<?php if ($pageno >= $total_pages) {
-                    echo 'disabled';
-                } ?>">
-                    <a href="<?php if ($pageno >= $total_pages) {
-                        echo '#';
-                    } else {
-                        echo "?tab=today&pageno=" . ($pageno + 1);
-                    } ?>">Next</a>
-                </li>
-                <li><a href="?tab=today&pageno=<?php echo $total_pages; ?>">Last</a></li>
-            </ul>
+
         </div>
         <div id="planned" <?php if ($tab == "planned") {
             echo "class='index showing'";
@@ -192,23 +179,22 @@ $image_path = $user['image_path'];
             echo "class='index'";
         } ?>>
             <div class="info">
-                <div class="">
-                    <h2>Planned tasks</h2>
+                <div class="title">
+                    Planned tasks
                 </div>
             </div>
             <div class="tasks">
-                <div class="task">
-                    <input type="text" class="addTask" name="" value="">
-                </div>
-                <div class="task">
-                    <input type="text" class="addTask" name="" value="">
-                </div>
-                <div class="task">
-                    <input type="text" class="addTask" name="" value="">
-                </div>
-                <div class="task">
-                    <input type="text" class="addTask" name="" value="">
-                </div>
+                <?php
+
+                $count = 10;
+                while (($rows = mysqli_fetch_assoc($data)) && ($count > 0)) {
+                    echo "<div class='task'><div class='check'></div><button type='button' id=".$rows['id']." onclick='resize(" . $rows['id'] . ")'>" . $rows['task'] . "</button></div>";
+                    $count--;
+                }
+                for ($i = 0; $i < $count; $i++) {
+                    echo "<div class='task'><input type='text' class='addTask' name='' value=''></div>";
+                }
+                ?>
 
             </div>
         </div>

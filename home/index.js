@@ -1,13 +1,24 @@
+var prevId=null
 function resize(id) {
+    if(prevId!=null){
+        document.getElementById(prevId).style.backgroundColor='white';
+    }
     var content = document.querySelector(".content")
     var main = document.querySelector(".main-content")
     main.style.width = '63%'
+    document.getElementById(id).style.backgroundColor='rgba(0,120,215,0.14 )';
     main.style.borderRight = '1px solid rgba(0,0,0,0.2)'
     var edit = document.querySelector(".edit")
     edit.style.display = 'block'
     console.log(id)
+    prevId=id;
 
 }
+
+function done(id) {
+    alert(id)
+}
+
 
 function setClass(div, className) {
     for (let j = 0; j < div.length; j++) {
