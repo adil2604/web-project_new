@@ -1,24 +1,58 @@
-var prevId=null
+var prevId = null;
+
 function resize(id) {
-    if(prevId!=null){
-        document.getElementById(prevId).style.backgroundColor='white';
+    if (prevId != null) {
+        document.getElementById(prevId).style.backgroundColor = 'white';
     }
-    var content = document.querySelector(".content")
-    var main = document.querySelector(".main-content")
-    main.style.width = '63%'
-    document.getElementById(id).style.backgroundColor='rgba(0,120,215,0.14 )';
-    main.style.borderRight = '1px solid rgba(0,0,0,0.2)'
-    var edit = document.querySelector(".edit")
-    edit.style.display = 'block'
-    console.log(id)
-    prevId=id;
+    var content = document.querySelector(".content");
+    var main = document.querySelector(".main-content");
+    main.style.width = '63%';
+    document.getElementById(id).style.backgroundColor = 'rgba(0,120,215,0.14 )';
+    main.style.borderRight = '1px solid rgba(0,0,0,0.2)';
+    var edit = document.querySelector(".edit");
+    edit.style.display = 'block';
+    console.log(id);
+    prevId = id;
 
 }
 
 function done(id) {
-    alert(id)
+    let req = new XMLHttpRequest();
+    let url = 'done.php';
+    let vars = 'data=' + id;
+    req.open('POST', url, true);
+    req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    req.onreadystatechange = function () {
+        if (!(req.readyState === 4 && req.status === 200)) {
+            return;
+        }
+        let data = req.responseText;
+        data = JSON.parse(data);
+        updateTask(id, data['done'])
+    };
+    req.send(vars);
+
+
 }
 
+function updateTask(id, code) {
+    let radio = document.querySelector('#check' + id);
+    let task = document.getElementById(id);
+    if (code === '0') {
+        radio.className = 'check done';
+        task.className = 'completed';
+    } else {
+        radio.className = 'check';
+        task.className = '';
+    }
+    let req = new XMLHttpRequest();
+    let url = 'done.php';
+    let vars = 'done=' + id + "&code=" + code;
+    req.open('POST', url, true);
+    req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    req.send(vars);
+
+}
 
 function setClass(div, className) {
     for (let j = 0; j < div.length; j++) {
@@ -36,15 +70,15 @@ function setCookie(name, value, expires, path, domain, secure) {
 
 function getCookie(name) {
     var cookie = " " + document.cookie;
-    var search = " " + name + "=";
+    let search = " " + name + "=";
     var setStr = null;
-    var offset = 0;
+    let offset = 0;
     var end = 0;
     if (cookie.length > 0) {
         offset = cookie.indexOf(search);
         if (offset != -1) {
             offset += search.length;
-            end = cookie.indexOf(";", offset)
+            end = cookie.indexOf(";", offset);
             if (end == -1) {
                 end = cookie.length;
             }
@@ -55,7 +89,7 @@ function getCookie(name) {
 }
 
 
-var btns = document.querySelectorAll(".tabs-box button")
+var btns = document.querySelectorAll(".tabs-box button");
 
 function setTab(i, location) {
     switch (i) {
@@ -76,9 +110,9 @@ function setTab(i, location) {
 
 
 function setActive(i) {
-    var currentLocation = window.location
-    setCookie('tab', i, " 01-Jan-2020 00:00:00 GMT", '/')
-    setTab(i, currentLocation)
+    var currentLocation = window.location;
+    setCookie('tab', i, " 01-Jan-2020 00:00:00 GMT", '/');
+    setTab(i, currentLocation);
     console.log(document.cookie);
     // let content=document.querySelectorAll(".index")
     // setClass(content,'index');
@@ -88,50 +122,8 @@ function setActive(i) {
 }
 
 
-function makeRequest(e, url) {
-    e.preventDefault();
-    var httpRequest = false;
 
-    if (window.XMLHttpRequest) { // Mozilla, Safari, ...
-        httpRequest = new XMLHttpRequest();
-        if (httpRequest.overrideMimeType) {
-            httpRequest.overrideMimeType('text/xml');
-            // Читайте ниже об этой строке
-        }
-    } else if (window.ActiveXObject) { // IE
-        try {
-            httpRequest = new ActiveXObject("Msxml2.XMLHTTP");
-        } catch (e) {
-            try {
-                httpRequest = new ActiveXObject("Microsoft.XMLHTTP");
-            } catch (e) {
-            }
-        }
-    }
 
-    if (!httpRequest) {
-        alert('Не вышло :( Невозможно создать экземпляр класса XMLHTTP ');
-        return false;
-    }
-    httpRequest.onreadystatechange = function () {
-        alertContents(httpRequest);
-    };
-    httpRequest.open('GET', url, true);
-    httpRequest.send(null);
-
-}
-
-function alertContents(httpRequest) {
-
-    if (httpRequest.readyState == 4) {
-        if (httpRequest.status == 200) {
-            alert(httpRequest.responseText);
-        } else {
-            alert('С запросом возникла проблема.');
-        }
-    }
-
-}
 
 
 /*

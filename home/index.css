@@ -170,6 +170,8 @@ nav {
     padding-bottom  : 0;
     border-radius: 3px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    font-family: 'Josefin Sans', sans-serif;
+
 }
 .addTask:hover,.task button:hover{
     background-color: rgba(0,120,215,0.05 );
@@ -180,13 +182,17 @@ nav {
 }
 .check{
     position: absolute;
-    top: 23%;
+    z-index: 1;
+    top: 25%;
     left: 1%;
     cursor: pointer;
     width: 1.3vw;
     height: 1.3vw;
     border: 1px solid #0078D7;
     border-radius:50%;
+    background-size: 1vw;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 .check:hover{
     background-image: url("../asserts/icons/done_blue.png");
@@ -194,7 +200,15 @@ nav {
     background-repeat: no-repeat;
     background-position: center;
 }
+.done{
+    background-color: #0078D7;
+    background-image: url("../asserts/icons/done_white.png");
+}
+.completed{
+    text-decoration: line-through;
+    color: rgba(0,0,0,0.6);
 
+}
 .edit {
     width: 19%;
     height: 100%;
@@ -218,5 +232,8 @@ li:hover{
 .pagination{
     display: flex;
     flex-direction: row;
-    margin-left: 70%;
+    margin-top: -1vw;
+    margin-left: 85%;
+    margin-right: 2vw;
+
 }

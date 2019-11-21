@@ -31,6 +31,24 @@ function pagination($c, $type){
     $data = mysqli_query($link, "SELECT * FROM test.tasks WHERE user_id = '" . $_COOKIE['id'] . "' AND Type=".$type." LIMIT $offset, $c");
 
 }
+
+function set_tasks($tasks,$cnt){
+    while (($rows = mysqli_fetch_assoc($tasks)) && ($cnt > 0)) {
+        $class='check';
+        $btn='';
+        if($rows['done']=="1"){
+            $class=$class." done";
+            $btn="completed";
+        }
+
+
+        echo "<div class='task'><div class='$class'  id='check".$rows['id']."' onclick='done(".$rows['id'].")'></div><button type='button' class='$btn' id=".$rows['id']." onclick='resize(" . $rows['id'] . ")'>" . $rows['task'] . "</button></div>";
+        $cnt--;
+    }
+    for ($i = 0; $i < $cnt; $i++) {
+        echo "<div class='task'><input type='text' class='addTask' name='' value=''></div>";
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -109,18 +127,9 @@ function pagination($c, $type){
             </div>
             <div class="tasks">
                 <?php
-
                 $count = 10;
-                while (($rows = mysqli_fetch_assoc($data)) && ($count > 0)) {
-                    echo "<div class='task'><div class='check'  id='' onclick='done(".$rows['id'].")'></div><button type='button' id=".$rows['id']." onclick='resize(" . $rows['id'] . ")'>" . $rows['task'] . "</button></div>";
-                    $count--;
-                }
-                for ($i = 0; $i < $count; $i++) {
-                    echo "<div class='task'><input type='text' class='addTask' name='' value=''></div>";
-                }
+                set_tasks($data,$count);
                 ?>
-
-
             </div>
 
         </div>
@@ -160,13 +169,7 @@ function pagination($c, $type){
                 <?php
 
                 $count = 10;
-                while (($rows = mysqli_fetch_assoc($data)) && ($count > 0)) {
-                    echo "<div class='task'><div class='check'></div><button type='button' id=".$rows['id']." onclick='resize(" . $rows['id'] . ")'>" . $rows['task'] . "</button></div>";
-                    $count--;
-                }
-                for ($i = 0; $i < $count; $i++) {
-                    echo "<div class='task'><input type='text' class='addTask' name='' value=''></div>";
-                }
+                set_tasks($data,$count);
                 ?>
 
             </div>
@@ -187,13 +190,7 @@ function pagination($c, $type){
                 <?php
 
                 $count = 10;
-                while (($rows = mysqli_fetch_assoc($data)) && ($count > 0)) {
-                    echo "<div class='task'><div class='check'></div><button type='button' id=".$rows['id']." onclick='resize(" . $rows['id'] . ")'>" . $rows['task'] . "</button></div>";
-                    $count--;
-                }
-                for ($i = 0; $i < $count; $i++) {
-                    echo "<div class='task'><input type='text' class='addTask' name='' value=''></div>";
-                }
+                set_tasks($data,$count);
                 ?>
 
             </div>
