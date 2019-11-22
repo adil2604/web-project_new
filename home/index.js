@@ -1,5 +1,5 @@
 var prevId = null;
-
+setActive(parseInt(getCookie('tab_new')));
 function resize(id) {
     if (prevId != null) {
         document.getElementById(prevId).style.backgroundColor = 'white';
@@ -53,6 +53,22 @@ function updateTask(id, code) {
     req.send(vars);
 
 }
+function search_in() {
+    let request=new XMLHttpRequest();
+    let vars='search='+document.getElementById("search-in").value;
+    let url='done.php';
+    console.log(vars);
+    request.open('POST', url, true);
+    request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    request.onreadystatechange = function () {
+        if (request.readyState === 4 && request.status === 200) {
+            let data = request.responseText;
+            data = JSON.parse(data);
+            console.log(data)
+        }
+    };
+    request.send(vars);
+}
 
 function setClass(div, className) {
     for (let j = 0; j < div.length; j++) {
@@ -88,19 +104,47 @@ function getCookie(name) {
     return (setStr);
 }
 
-
+function xmlrequest(vars,url,data,json) {
+    let request=new XMLHttpRequest();
+    request.open('POST', url, false);
+    request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    if(data===1){
+        request.onreadystatechange = function () {
+            if (request.readyState === 4 && request.status === 200) {
+                if(json===1){
+                    let data = request.responseText;
+                    data = JSON.parse(data);
+                    return data;
+                }
+                else{
+                    let data=request.responseText
+                    console.log(1)
+                    return  data;
+                }
+            }
+        };
+    }
+    request.send(vars);
+    return request.onreadystatechange();
+}
 var btns = document.querySelectorAll(".tabs-box button");
 
 function setTab(i, location) {
     switch (i) {
         case 0:
-            location.search = 'tab=important&';
+            var d=xmlrequest('tab=important','done.php',1,0);
+            document.querySelector('.main-content').innerHTML=d;
+            history.pushState('Important','Important','?tab=important')
             break;
         case 1:
-            location.search = 'tab=today&';
+            d=xmlrequest('tab=today','done.php',1,0);
+            document.querySelector('.main-content').innerHTML=d;
+            history.pushState('Today','today','?tab=today');
             break;
         case 2:
-            location.search = 'tab=planned&';
+            d=xmlrequest('tab=planned','done.php',1,0);
+            document.querySelector('.main-content').innerHTML=d;
+            history.pushState('Planned','planned','?tab=planned');
             break;
         default:
             break;
@@ -111,14 +155,9 @@ function setTab(i, location) {
 
 function setActive(i) {
     var currentLocation = window.location;
-    setCookie('tab', i, " 01-Jan-2020 00:00:00 GMT", '/');
+    setCookie('tab_new', i, " 01-Jan-2020 00:00:00 GMT", '/');
     setTab(i, currentLocation);
-    console.log(document.cookie);
-    // let content=document.querySelectorAll(".index")
-    // setClass(content,'index');
-    // //content[i].className='index showing'
-    // setClass(btns,'');
-    // btns[i].className='active'
+
 }
 
 
@@ -126,19 +165,3 @@ function setActive(i) {
 
 
 
-/*
-
-var tasks=document.querySelectorAll(".tasks .addTask")
-for (var i = 0; i < tasks.length; i++) {
-  tasks[i].addEventListener('keydown',function (e) {
-    var keyCode = e.keyCode || e.which;
-    if ( keyCode === 13 ) {
-      alert(this.value)
-      var btn=document.createElement('button')
-      btn.appendChild(document.createTextNode(this.value))
-      this.text= '';
-      // this.removeChild(this.childNodes[1])
-
-    }
-  })
-}*/

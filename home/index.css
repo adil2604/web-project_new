@@ -78,7 +78,7 @@ nav {
     background-color: rgba(0, 0, 0, 0.9);
 }
 
-.tabs-box button {
+.tabs-box div {
     background-position: left;
     outline: none;
     background-repeat: no-repeat;
@@ -125,7 +125,7 @@ nav {
     display: block;
 }
 
-.tabs-box button:hover {
+.tabs-box div:hover {
     background-color: rgba(0, 0, 0, 0.1);
 }
 
