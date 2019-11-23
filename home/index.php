@@ -1,54 +1,13 @@
 <?php
-$tab = 'important';
 
 if (!isset($_COOKIE['id']))
     header("Location: ../login/login.php");
 
-if (isset($_GET['tab'])) {
-    $tab = $_GET['tab'];
-}
+
 $link = mysqli_connect("localhost", "adil", "221634adil", "test");
 $user = mysqli_query($link, "SELECT * FROM user WHERE user_id='" . $_COOKIE['id'] . "' LIMIT 1");
 $user = mysqli_fetch_assoc($user);
 $image_path = $user['image_path'];
-
-$data='';
-$total_pages=0;
-$pageno=1;
-function pagination($c, $type){
-    global $link,$data,$total_pages,$pageno;
-    if (isset($_GET['pageno'])) {
-        $pageno = $_GET['pageno'];
-    } else {
-        $pageno = 1;
-    }
-    $offset = ($pageno - 1) * $c;
-
-    $total_pages_sql = "SELECT COUNT(*) FROM test.tasks WHERE user_id = '" . $_COOKIE['id'] . "' AND Type=".$type." ";
-    $result = mysqli_query($link, $total_pages_sql);
-    $total_rows = mysqli_fetch_array($result)[0];
-    $total_pages = ceil($total_rows / $c);
-    $data = mysqli_query($link, "SELECT * FROM test.tasks WHERE user_id = '" . $_COOKIE['id'] . "' AND Type=".$type." LIMIT $offset, $c");
-
-}
-
-function set_tasks($tasks,$cnt){
-    while (($rows = mysqli_fetch_assoc($tasks)) && ($cnt > 0)) {
-        $class='check';
-        $btn='';
-        if($rows['done']=="1"){
-            $class=$class." done";
-            $btn="completed";
-        }
-
-
-        echo "<div class='task'><div class='$class'  id='check".$rows['id']."' onclick='done(".$rows['id'].")'></div><button type='button' class='$btn' id=".$rows['id']." onclick='resize(" . $rows['id'] . ")'>" . $rows['task'] . "</button></div>";
-        $cnt--;
-    }
-    for ($i = 0; $i < $cnt; $i++) {
-        echo "<div class='task'><input type='text' class='addTask' name='' value=''></div>";
-    }
-}
 ?>
 
 <!DOCTYPE html>

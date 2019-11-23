@@ -79,6 +79,7 @@ nav {
 }
 
 .tabs-box div {
+    cursor: pointer;
     background-position: left;
     outline: none;
     background-repeat: no-repeat;
