@@ -172,8 +172,19 @@ function add_task(type) {
     console.log("send");
     let task=document.getElementById('input'+type).value;
     xmlrequest('add='+type+'&task='+task,'done.php',0,0)
-    setActive(parseInt(getCookie('tab_new')));
+    setActive(parseInt(getCookie('tab_new')) );
 }
+
+
+
+
+var page=1
+function paginationF() {
+    page+=1;
+    let tasks=xmlrequest("page="+page,'done.php',1,0)
+    console.log(tasks)
+}
+
 
 
 

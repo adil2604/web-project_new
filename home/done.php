@@ -3,6 +3,7 @@ $user_id = $_COOKIE['id'];
 $link = mysqli_connect("localhost", "adil", "221634adil", "test");
 $user = mysqli_query($link, "SELECT * FROM `user` WHERE user_id=$user_id");
 $user = mysqli_fetch_assoc($user);
+$count=10;
 if (isset($_POST['add'])) {
     $type = $_POST['add'];
     $task = $_POST['task'];
@@ -41,7 +42,7 @@ if (isset($_POST['search'])) {
     if (strlen($search) > 2 && $query) {
         $title = "Search by " . $_POST['search'];
         $count = 10;
-        $tasks = set_tasks($query, $count, true);
+        $tasks = set_tasks($query, $count, 0,true);
         echo "<div  class='index showing'><div class=\"info\"><div class=\"title\">$title</div></div><div class=\"tasks\">$tasks</div></div>";
     } else if (strlen($search) > 2 && !$query) {
         echo "<div  class='index showing'><div class=\"info\"><div class=\"title\">Sorry, but nothing found on request $search!</div></div><div class=\"tasks\"></div></div>";
@@ -57,21 +58,21 @@ if (isset($_POST['tab'])) {
             $title = "Important tasks";
             $count = 10;
             pagination(10, 0);
-            $tasks = set_tasks($data, $count);
+            $tasks = set_tasks($data, $count,0);
             echo "<div id=$tab class='index showing'><div class=\"info\"><div class=\"title\">$title</div></div><div class=\"tasks\">$tasks</div></div>";
             break;
         case "today":
             $title = "Today tasks";
             $count = 10;
             pagination(10, 1);
-            $tasks = set_tasks($data, $count);
+            $tasks = set_tasks($data, $count,1);
             echo "<div id=$tab class='index showing'><div class=\"info\"><div class=\"title\">$title</div></div><div class=\"tasks\">$tasks</div></div>";
             break;
         case 'planned':
             $title = "Planned tasks";
             $count = 10;
             pagination(10, 2);
-            $tasks = set_tasks($data, $count);
+            $tasks = set_tasks($data, $count,2);
             echo "<div id=$tab class='index showing'><div class=\"info\"><div class=\"title\">$title</div></div><div class=\"tasks\">$tasks</div></div>";
             break;
         default:
@@ -79,30 +80,45 @@ if (isset($_POST['tab'])) {
 
     }
 }
+if(isset($_POST['page'])){
+    $page=$_POST['page'];
+
+}
 
 
-function set_tasks($tasks, $cnt, $search = false)
+function set_tasks($tasks, $cnt,$id=0 ,$search = false)
 {
     $data = '';
-    while (($rows = mysqli_fetch_assoc($tasks)) && ($cnt > 0)) {
-        $type = $rows['type'];
-        $class = 'check';
-        $btn = '';
-        if ($rows['done'] == "1") {
-            $class = $class . " done";
-            $btn = "completed";
-        }
+    if(mysqli_num_rows($tasks)>0){
+        while (($rows = mysqli_fetch_assoc($tasks)) && ($cnt > 0)) {
+            $type = $rows['type'];
+            $class = 'check';
+            $btn = '';
+            if ($rows['done'] == "1") {
+                $class = $class . " done";
+                $btn = "completed";
+            }
 
 
-        $data .= "<div class='task'><div class='$class'  id='check" . $rows['id'] . "' onclick='done(" . $rows['id'] . ")'></div><button type='button' class='$btn' id=" . $rows['id'] . " onclick='resize(" . $rows['id'] . ")'>" . $rows['task'] . "</button></div>";
-        $cnt--;
-    }
-    if (!$search) {
-        $data .= "<div class='task'><input type='text' class='addTask' id='input$type' placeholder='Add task' onchange='add_task($type)' value=''></div>";
-        for ($i = 0; $i < $cnt - 1; $i++) {
-            $data .= "<div class='task'><div class='addTask' ></div></div>";
+            $data .= "<div class='task'><div class='$class'  id='check" . $rows['id'] . "' onclick='done(" . $rows['id'] . ")'></div><button type='button' class='$btn' id=" . $rows['id'] . " onclick='resize(" . $rows['id'] . ")'>" . $rows['task'] . "</button></div>";
+            $cnt--;
+        }
+        if (!$search && $cnt>1) {
+            $data .= "<div class='task'><input type='text' class='addTask' id='input$type' placeholder='Add task' onchange='add_task($type)' value=''></div>";
+            for ($i = 0; $i < $cnt - 1; $i++) {
+                $data .= "<div class='task'><div class='addTask' ></div></div>";
+            }
         }
     }
+    else{
+        if (!$search && $cnt>0) {
+            $data .= "<div class='task'><input type='text' class='addTask' id='input$id' placeholder='Add task' onchange='add_task($id)' value=''></div>";
+            for ($i = 0; $i < $cnt - 1; $i++) {
+                $data .= "<div class='task'><div class='addTask' ></div></div>";
+            }
+        }
+    }
+
 
     return $data;
 }

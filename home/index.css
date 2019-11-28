@@ -75,7 +75,7 @@ nav {
     padding-top: 2vw;
 }
 .profile:hover {
-    background-color: rgba(0, 0, 0, 0.9);
+    background-color: rgba(0, 0, 0, 0.2);
 }
 
 .tabs-box div {
@@ -87,6 +87,7 @@ nav {
     margin: 0.5vw 0 0 1.5vw;
     padding-left: 3.5vw;
     text-align: left;
+
     height: 10%;
     font-size: 1vw;
     font-family: 'Josefin Sans', sans-serif;

@@ -61,7 +61,7 @@
 
 <section class='nav'>
     <nav style="width: 100%;height: 100%">
-        <img src="../asserts/icons/icon.png" alt="Logo" style="width:auto;height: 100%; margin-left: 2vw;">
+        <img src="../asserts/icons/icon.png" alt="Logo" onclick="window.location='/home/index.php'" style=" width:auto;height: 100%;cursor:pointer; margin-left: 2vw;">
         <form class="search" action="" method="post" style="width: 30%;height: 50%;display:flex;margin-block-end: 0">
             <input type="text" name="search-input" class="search-input" value="" placeholder="Search in tasks....">
             <input type="button" name="" id="search" value="" style="border:0; width: 10%;height: 100%; margin:0">
@@ -71,6 +71,9 @@
         $user = mysqli_query($link, "SELECT * FROM user WHERE user_id='" . $_COOKIE['id'] . "' LIMIT 1");
         $user = mysqli_fetch_assoc($user);
         $image_path = $user['image_path'];
+        if($image_path==''){
+            $image_path="../asserts/images/proflie.png";
+        }
         ?>
         <a href="../login/profile.php" class="profile"
            style="background-image: url(<?php echo $image_path; ?>); height: 70%;width: 3%;margin-right: 2vw;"></a>
