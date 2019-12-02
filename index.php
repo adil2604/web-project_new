@@ -1,3 +1,12 @@
+<?php
+if (isset($_COOKIE['hash'])){
+    header("Location: /home");
+}
+
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>

@@ -12,11 +12,11 @@ function generateCode($length = 6)
     return $code;
 }
 
+$err=[];
 // Соединямся с БД
 $link = mysqli_connect("localhost", "adil", "221634adil", "test");
 
 if (isset($_POST['submit'])) {
-    // Вытаскиваем из БД запись, у которой логин равняеться введенному
     $query = mysqli_query($link, "SELECT user_id, user_password FROM user WHERE user_login='" . mysqli_real_escape_string($link, $_POST['login']) . "' LIMIT 1");
     $data = mysqli_fetch_assoc($query);
     $hash = md5(generateCode(10));
@@ -31,11 +31,16 @@ if (isset($_POST['submit'])) {
         // Ставим куки
         setcookie("id", $data['user_id'], time() + 60 * 60 * 24 * 30);
         setcookie("hash", $hash, time() + 3600 * 24 * 30 * 12);
-        echo $hash;
         // Переадресовываем браузер на страницу проверки нашего скрипта
         header("Location: check.php");
     } else {
-        echo "Вы ввели неправильный логин/пароль";
+        array_push($err,"Invalid username or password!");
+    }
+}
+if(isset($_REQUEST['err'])){
+    $error=$_REQUEST['err'];
+    if ($error=='not_admin'){
+        array_push($err,'You should log in with admin profile!');
     }
 }
 
@@ -64,6 +69,13 @@ if (isset($_POST['submit'])) {
 
 
         </form>
+        <?php
+        if(isset($err)){
+            foreach ($err as $error){
+                echo "<div class='err'>$error<br></div>";
+            }
+        }
+        ?>
         Don not have account? <a href="registration.php">Registration</a>
     </div>
 </div>

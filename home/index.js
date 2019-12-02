@@ -1,6 +1,6 @@
 let prevId = null;
 let prevTab = null;
-const tabs = document.querySelectorAll('.tabs-box div');
+const tabs = document.querySelectorAll('.tabs-box button');
 setActive(parseInt(getCookie('tab_new')));
 
 function resize(id) {
@@ -13,45 +13,43 @@ function resize(id) {
     main.style.borderRight = '1px solid rgba(0,0,0,0.2)';
     var edit = document.querySelector(".edit");
     edit.style.display = 'block';
+    let editTask = xmlrequest('edit=' + id, 'done.php', 1, 1);
+    let nameclass = 'check';
+    if (editTask['done'] === '1') {
+        nameclass += ' done';
+    }
+
+    let editbox = document.querySelector('.edit-box')
+    editbox.innerHTML = ''
+    let name = "<div class='edit-container'><div class='" + nameclass + "'style='left: 5%' id='check" + id + "' onclick='done(" + id + ")' ></div><input type='text' class='edit-name'style='margin-left: 2vw' value=' " + editTask['task'] + "'></div>"
+    editbox.innerHTML += name;
+    let reminder = "<div class='edit-container' style='display: flex;flex-direction: column'><input type='text' placeholder='Reminder'class='edit-name cat'><input type='text' class='edit-name' style='margin-left: 1vw' placeholder='Date to do' ></div>"
+    editbox.innerHTML += reminder
+
+
+
     prevId = id;
 
 }
 
 function done(id) {
-    let req = new XMLHttpRequest();
-    let url = 'done.php';
-    let vars = 'data=' + id;
-    req.open('POST', url, true);
-    req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    req.onreadystatechange = function () {
-        if (!(req.readyState === 4 && req.status === 200)) {
-            return;
-        }
-        let data = req.responseText;
-        data = JSON.parse(data);
-        updateTask(id, data['done'])
-    };
-    req.send(vars);
-
-
+    let data=xmlrequest('data='+id,'done.php',1,1)
+    updateTask(id, data['done'])
 }
 
 function updateTask(id, code) {
-    let radio = document.querySelector('#check' + id);
+    let radio = document.querySelectorAll('#check' + id);
     let task = document.getElementById(id);
     if (code === '0') {
-        radio.className = 'check done';
+        for (let r of radio)
+            r.className = 'check done';
         task.className = 'completed';
     } else {
-        radio.className = 'check';
+        for (let r of radio)
+            r.className = 'check';
         task.className = '';
     }
-    let req = new XMLHttpRequest();
-    let url = 'done.php';
-    let vars = 'done=' + id + "&code=" + code;
-    req.open('POST', url, true);
-    req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    req.send(vars);
+    xmlrequest('data='+id+'&code='+code,'done.php',0,0)
 
 }
 
@@ -121,7 +119,7 @@ function xmlrequest(vars, url, data, json) {
         };
     }
     request.send(vars);
-    if(data===1){
+    if (data === 1) {
         return request.onreadystatechange();
     }
 }
@@ -166,22 +164,19 @@ function setActive(i) {
 }
 
 
-
-
 function add_task(type) {
     console.log("send");
-    let task=document.getElementById('input'+type).value;
-    xmlrequest('add='+type+'&task='+task,'done.php',0,0)
-    setActive(parseInt(getCookie('tab_new')) );
+    let task = document.getElementById('input' + type).value;
+    xmlrequest('add=' + type + '&task=' + task, 'done.php', 0, 0)
+    setActive(parseInt(getCookie('tab_new')));
 }
 
 
+var page = 1
 
-
-var page=1
 function paginationF() {
-    page+=1;
-    let tasks=xmlrequest("page="+page,'done.php',1,0)
+    page += 1;
+    let tasks = xmlrequest("page=" + page, 'done.php', 1, 0)
     console.log(tasks)
 }
 

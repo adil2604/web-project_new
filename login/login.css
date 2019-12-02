@@ -43,5 +43,11 @@ body{
   margin-top: 1vw;
   font-size: 1vw;
   border: 0;
+  border-bottom: 1px solid rgba(0,0,0,0.4);
   font-family: 'Josefin Sans',sans-serif;
+}
+
+
+.err{
+  color: red;
 }

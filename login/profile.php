@@ -59,6 +59,7 @@ if (isset($_GET['logout'])) {
                 <div class="email">Surname: <input id='surname' value="<?php echo $userdata['user_surname']?>" type='text'></div>
                 <div class="email">Change password: <br><div><input type="text" id="pass" placeholder="current password"><br><input type="text" id="newPass" placeholder="new password"></div></div>
                 <button type="button" id="save"  onclick="save()">Save</button>
+                <a href="?logout=1">Log Out</a>
                 <div id="error" class="error"></div>
 
             </div>
@@ -73,6 +74,5 @@ if (isset($_GET['logout'])) {
 </html>
 
 
-<a href="?logout=1">Log Out</a>
 
 

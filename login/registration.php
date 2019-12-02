@@ -10,28 +10,34 @@
 <div class="login">
     <div class="login-box">
         <div class="name">
-            User Login
+            Registration
         </div>
         <?php
         $link = mysqli_connect("localhost", "adil", "221634adil", "test");
 
+        $err = [];
         if (isset($_POST['submit'])) {
-            echo "sss";
-            $err = [];
-
+            $email=$_POST['email'];
+            $login=$_POST['login'];
+            $password=$_POST['password'];
             // проверям логин
-            if (!preg_match("/^[a-zA-Z0-9]+$/", $_POST['login'])) {
-                $err[] = "Логин может состоять только из букв английского алфавита и цифр";
+            if (!preg_match("/^[a-zA-Z0-9]+$/", $login)) {
+                array_push($err,'Username must contain only latin letters and numbers!');
             }
 
-            if (strlen($_POST['login']) < 3 or strlen($_POST['login']) > 30) {
-                $err[] = "Логин должен быть не меньше 3-х символов и не больше 30";
+            if (strlen($login) < 3 or strlen($login) > 30) {
+                array_push($err,'Username must be more than 3 symbols!');
             }
 
             // проверяем, не сущестует ли пользователя с таким именем
-            $query = mysqli_query($link, "SELECT user_id FROM user WHERE user_login='" . mysqli_real_escape_string($link, $_POST['login']) . "'");
+            $query = mysqli_query($link, "SELECT user_id FROM user WHERE user_login='$login'");
             if (mysqli_num_rows($query) > 0) {
-                $err[] = "Пользователь с таким логином уже существует в базе данных";
+                array_push($err,'User with this username exist!');
+            }
+
+            $query = mysqli_query($link, "SELECT user_id FROM user WHERE user_email='$email'");
+            if (mysqli_num_rows($query) > 0) {
+                array_push($err,'User with this email exist!');
             }
 
             // Если нет ошибок, то добавляем в БД нового пользователя
@@ -45,22 +51,24 @@
                 mysqli_query($link, "INSERT INTO user SET user_login='" . $login . "', user_password='" . $password . "'");
                 header("Location: login.php");
                 exit();
-            } else {
-                print "<b>При регистрации произошли следующие ошибки:</b><br>";
-                foreach ($err AS $error) {
-                    print $error . "<br>";
-                }
             }
         }
         ?>
         <form class="form-login" action="" method="POST">
-            <input type="text" name="login" value="" placeholder="Username">
-            <input type="password" name="password" value="" placeholder="Password">
-            <input type="email" name="email" value="" placeholder="Email">
+            <input type="text" name="login" value=""  required placeholder="Username">
+            <input type="email" name="email" value="" required placeholder="Email">
+            <input type="password" name="password" required value="" placeholder="Password">
             <input type="submit" name="submit" value="Register" style="background:#0078D7; color: white;">
 
 
         </form>
+        <?php
+        if(isset($err)){
+            foreach ($err as $error){
+                echo "<div class='err'>$error<br></div>";
+            }
+        }
+        ?>
         Have account? <a href="login.php">Log In</a>
     </div>
 </div>

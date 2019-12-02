@@ -37,26 +37,26 @@ if($image_path==''){
 <section class="content">
     <section class="tabs">
         <div class="tabs-box" style="width:100%;height:70%;margin:3vw 0 auto auto;display:flex;flex-direction:column;">
-            <div   style="background-image: url('../asserts/icons/0.png');" onclick="setActive(0)">
-                Important
-            </div>
-            <div style="background-image: url('../asserts/icons/1.png');" onclick="setActive(1)">
-                Today tasks
-            </div>
-            <div style="background-image: url('../asserts/icons/2.png');" onclick="setActive(2)">
-
-                Planned tasks
-            </div>
+            <button  style="background-image: url('../asserts/icons/0.png');" onclick="setActive(0)">
+                Important        <span class="count" >5</span>
+            </button>
+            <button style="background-image: url('../asserts/icons/1.png');" onclick="setActive(1)">
+                Today tasks <span class="count">5</span>
+            </button>
+            <button style="background-image: url('../asserts/icons/2.png');" onclick="setActive(2)">
+                Planned tasks<span class="count">5</span>
+            </button>
 
 
         </div>
     </section>
     <div class="main-content">
 
-        </div>
     </div>
     <div class="edit">
+        <div class="edit-box">
 
+        </div>
     </div>
 
 </section>

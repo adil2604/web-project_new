@@ -13,7 +13,13 @@ if (isset($_POST['add'])) {
     $query = mysqli_query($link, $sql);
 
 }
+else if (isset($_POST['edit'])){
+    $id=$_POST['edit'];
+    $query=mysqli_query($link,"SELECT * FROM `tasks` WHERE `id` = $id AND `user_id` = $user_id");
+    echo json_encode(mysqli_fetch_array($query));
 
+
+}
 
 if (isset($_POST['data'])) {
     $user_id = $_COOKIE['id'];

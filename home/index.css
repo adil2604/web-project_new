@@ -71,14 +71,23 @@ nav {
     transition: 0.6s;
 
 }
-.title{
+
+.title {
     padding-top: 2vw;
 }
+
 .profile:hover {
     background-color: rgba(0, 0, 0, 0.2);
 }
+.count{
+    font-size: 0.9vw;
+    position: absolute;
+    top: 36%;
+    right: 5%;
+    font-weight: bold;
+}
 
-.tabs-box div {
+.tabs-box button {
     cursor: pointer;
     background-position: left;
     outline: none;
@@ -87,14 +96,16 @@ nav {
     margin: 0.5vw 0 0 1.5vw;
     padding-left: 3.5vw;
     text-align: left;
-
+    position: relative;
     height: 10%;
     font-size: 1vw;
     font-family: 'Josefin Sans', sans-serif;
     transition: 0.6s;
     background-color: rgba(0, 0, 0, 0);
     border: 0;
-
+}
+.title{
+    font-size: 1.3vw;
 }
 
 .active {
@@ -127,7 +138,7 @@ nav {
     display: block;
 }
 
-.tabs-box div:hover {
+.tabs-box button:hover {
     background-color: rgba(0, 0, 0, 0.1);
 }
 
@@ -159,6 +170,7 @@ nav {
     margin: 0 auto auto auto;
     position: relative;
 }
+
 .addTask, .task button {
     border: 0;
     background-color: white;
@@ -169,20 +181,23 @@ nav {
     font-size: 1.5vw;
     text-align: left;
     position: relative;
-    padding-bottom  : 0;
+    padding-bottom: 0;
     border-radius: 3px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     font-family: 'Josefin Sans', sans-serif;
 
 }
-.addTask:hover,.task button:hover{
-    background-color: rgba(0,120,215,0.05 );
+
+.addTask:hover, .task button:hover {
+    background-color: rgba(0, 120, 215, 0.05);
 }
-.addTask:focus{
-    background-color: rgba(0,120,215,0.1 );
+
+.addTask:focus {
+    background-color: rgba(0, 120, 215, 0.1);
 
 }
-.check{
+
+.check {
     position: absolute;
     z-index: 1;
     top: 25%;
@@ -191,47 +206,99 @@ nav {
     width: 1.3vw;
     height: 1.3vw;
     border: 1px solid #0078D7;
-    border-radius:50%;
+    border-radius: 50%;
     background-size: 1vw;
     background-repeat: no-repeat;
     background-position: center;
 }
-.check:hover{
+
+.check:hover {
     background-image: url("../asserts/icons/done_blue.png");
     background-size: 0.9vw;
     background-repeat: no-repeat;
     background-position: center;
 }
-.done{
+
+.cat{
+    margin-left: 1vw;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+    height: 2vw  ;
+}
+
+.done {
     background-color: #0078D7;
     background-image: url("../asserts/icons/done_white.png");
 }
-.completed{
+.done:hover{
+    background-image: url("../asserts/icons/done_white.png") !important;
+}
+
+.completed {
     text-decoration: line-through;
-    color: rgba(0,0,0,0.6);
+    color: rgba(0, 0, 0, 0.6);
 
 }
+
 .edit {
     width: 19%;
     height: 100%;
     margin: 0 0 0 1%;
     display: none;
 }
-li>a,li{
+
+li > a, li {
     text-decoration: none;
     color: black;
     list-style-type: none;
     margin: 0.2vw;
 }
-li{
-    border: 1px solid rgba(0,0,0,0.2);
+
+li {
+    border: 1px solid rgba(0, 0, 0, 0.2);
     padding: 0.2vw;
     border-radius: 4px;
 }
-li:hover{
-    background-color: rgba(0,0,0,0.3);
+
+li:hover {
+    background-color: rgba(0, 0, 0, 0.3);
 }
-.pagination{
+
+.edit-box {
+    width: 95%;
+    height: 98%;
+    margin-top: 3%;
+    display: flex;
+    flex-direction: column;
+
+
+}
+
+.edit-container {
+    width: 90%;
+    position: relative;
+    height: fit-content;
+    padding: 1vw;
+    background-color: white;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+
+}
+.edit-name{
+    background-color: white;
+    border: 0;
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 1.3vw;
+    border-radius: 3px;
+
+}
+.edit-name:hover{
+    background-color: rgba(0, 120, 215, 0.1);
+
+}
+.edit-name:focus{
+    outline: 1px solid rgba(0,0,0,0.4);
+}
+
+.pagination {
     display: flex;
     flex-direction: row;
     margin-top: -1vw;
