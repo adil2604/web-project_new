@@ -44,11 +44,12 @@
             if (count($err) == 0) {
 
                 $login = $_POST['login'];
-
+                $date = date('Y-m-d');
+                $email=$_POST['email'];
                 // Убераем лишние пробелы и делаем двойное хеширование
                 $password = md5(md5(trim($_POST['password'])));
 
-                mysqli_query($link, "INSERT INTO user SET user_login='" . $login . "', user_password='" . $password . "'");
+                mysqli_query($link, "INSERT INTO user SET user_login='" . $login . "', user_password='" . $password . "',user_email='$email',date_registration='$date' ");
                 header("Location: login.php");
                 exit();
             }

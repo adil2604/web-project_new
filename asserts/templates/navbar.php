@@ -63,7 +63,7 @@
     <nav style="width: 100%;height: 100%">
         <img src="../asserts/icons/icon.png" alt="Logo" onclick="window.location='/home/index.php'" style=" width:auto;height: 100%;cursor:pointer; margin-left: 2vw;">
         <form class="search" action="" method="post" style="width: 30%;height: 50%;display:flex;margin-block-end: 0">
-            <input type="text" name="search-input" class="search-input" value="" placeholder="Search in <?php if ($_SERVER['REQUEST_URI']=='/admin/') echo 'users';else echo 'users';?>....">
+            <input type="text" id="search-in" name="search-input" class="search-input" value="" placeholder="Search in <?php if ($_SERVER['REQUEST_URI']=='/admin/') echo 'users';else echo 'users';?>....">
             <input type="button" name="" id="search" value="" style="border:0; width: 10%;height: 100%; margin:0">
         </form>
         <?php

@@ -60,6 +60,10 @@ if (isset($_GET['logout'])) {
                 <div class="email">Change password: <br><div><input type="text" id="pass" placeholder="current password"><br><input type="text" id="newPass" placeholder="new password"></div></div>
                 <button type="button" id="save"  onclick="save()">Save</button>
                 <a href="?logout=1">Log Out</a>
+                <?php
+                if ($userdata['admin'])
+                    echo " <a href='../admin'>Admin panel</a>"
+                ?>
                 <div id="error" class="error"></div>
 
             </div>

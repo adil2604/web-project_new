@@ -21,21 +21,25 @@ include '../asserts/templates/navbar.php';
 <div class="admin-main">
     <div class="admin-box">
 
-        <table class="tg">
-            <tr>
+        <table id="table" class="tg">
+            <tr style="border-bottom: 1px solid rgba(0, 120, 215, 0.2)">
                 <th class="tg-8q56">User Name</th>
+                <th class="tg-8q56">User Email</th>
                 <th class="tg-8q56">Role</th>
                 <th class="tg-8q56">Date Registration</th>
-                <th class="tg-8q56">Tasks</th>
                 <th class="tg-8q56">Actions</th>
+                <th class="tg-8q56">Tasks</th>
             </tr>
-            <tr>
-                <td class="tg-8q56"></td>
-                <td class="tg-8q56"></td>
-                <td class="tg-8q56"></td>
-                <td class="tg-8q56"></td>
-                <td class="tg-8q56"></td>
-            </tr>
+<!--            <tr>-->
+<!--                <td class="tg-8q56"></td>-->
+<!--                <td class="tg-8q56"></td>-->
+<!--                <td class="tg-8q56"></td>-->
+<!--                <td class="tg-8q56" style="display: flex;justify-content: center">-->
+<!--                    <div class="edit"></div>-->
+<!--                    <div class="delete"></div>-->
+<!--                </td>-->
+<!--                <td class="tg-8q56"></td>-->
+<!--            </tr>-->
 
         </table>
     </div>
