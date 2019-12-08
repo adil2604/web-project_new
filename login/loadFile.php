@@ -17,10 +17,7 @@ if (isset($_POST["submit"])) {
     }
 }
 // Check if file already exists
-if (file_exists($target_file)) {
-    $error[] = "Sorry, file already exists.";
-    $uploadOk = 0;
-}
+
 // Check file size
 if ($_FILES["userfile"]["size"] > 500000) {
     $error[] = "Sorry, your file is too large.";
@@ -47,6 +44,7 @@ if ($uploadOk == 0) {
         }
 
     }
+    header('Location: /login/profile.php');
 }
 
 

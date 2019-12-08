@@ -44,7 +44,7 @@ if (isset($_GET['logout'])) {
                     echo "</form>";
                 } else {
                     echo "<form method='post'  action='loadFile.php' enctype=\"multipart/form-data\" >";
-                    echo "<div class=\"upload-btn-wrapper\">  <button class=\"btn\">Upload a file</button><input type=\"file\" name='userfile' onchange=\"this.form.submit()\" /></div>";
+                    echo "<div class=\"upload-btn-wrapper uploaded \">  <button class=\"btn\">Upload a file</button><input type=\"file\" name='userfile' onchange=\"this.form.submit()\" /></div>";
                     echo "</form>";
 
                 }
@@ -54,10 +54,13 @@ if (isset($_GET['logout'])) {
                 ?>
             </div>
             <div class="info">
-                <div class="email">Email: <?php echo $userdata['user_email']?></div>
-                <div class="email">First Name: <input id='name' type='text' value="<?php echo $userdata['user_name']?>"> </div>
-                <div class="email">Surname: <input id='surname' value="<?php echo $userdata['user_surname']?>" type='text'></div>
-                <div class="email">Change password: <br><div><input type="text" id="pass" placeholder="current password"><br><input type="text" id="newPass" placeholder="new password"></div></div>
+                <div class="email"><div>Email: </div>
+                    <?php echo "<section >".$userdata['user_email']."</section>"?></div>
+                <div class="email"><div>First Name:</div>
+                    <input id='name' type='text' value="<?php echo $userdata['user_name']?>"> </div>
+                <div class="email"><div>Surname:</div>
+                    <input id='surname' value="<?php echo $userdata['user_surname']?>" type='text'></div>
+                <div class="email"><div>Change password:</div>  <section class="pass"><input type="text" id="pass" placeholder="current password"><br><input type="text" id="newPass" placeholder="new password"></section></div>
                 <button type="button" id="save"  onclick="save()">Save</button>
                 <a href="?logout=1">Log Out</a>
                 <?php
