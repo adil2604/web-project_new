@@ -1,14 +1,25 @@
 let prevId = null;
 let prevTab = null;
+let TYPES=3;
 const tabs = document.querySelectorAll('.tabs-box button');
 setActive(parseInt(getCookie('tab_new')));
+setCount();
+let pages=get_pagination_pages();
+console.log(pages);
+
+function setCount() {
+    let tabs = [document.getElementById('important-count'), document.getElementById('today-count'), document.getElementById('planned-count')]
+    for(let i=0;i<tabs.length;i++){
+        tabs[i].innerHTML=getCountTasks(i)
+    }
+}
 
 function resize(id) {
     if (prevId != null) {
         document.getElementById(prevId).style.backgroundColor = 'white';
     }
     var main = document.querySelector(".main-content");
-    main.style.width = '63%';
+    main.style.width = '59%';
     document.getElementById(id).style.backgroundColor = 'rgba(0,120,215,0.14 )';
     main.style.borderRight = '1px solid rgba(0,0,0,0.2)';
     var edit = document.querySelector(".edit");
@@ -23,9 +34,8 @@ function resize(id) {
     editbox.innerHTML = ''
     let name = "<div class='edit-container'><div class='" + nameclass + "'style='left: 5%' id='check" + id + "' onclick='done(" + id + ")' ></div><input type='text' class='edit-name'style='margin-left: 2vw' value=' " + editTask['task'] + "'></div>"
     editbox.innerHTML += name;
-    let reminder = "<div class='edit-container' style='display: flex;flex-direction: column'><input type='text' placeholder='Reminder'class='edit-name cat'><input type='text' class='edit-name' style='margin-left: 1vw' placeholder='Date to do' ></div>"
+    let reminder = "<div class='edit-container' style='display: flex;flex-direction: column'><input type='text' value=''  placeholder='Reminder' onfocus=\"(this.type='date')\"  class='edit-name cat'><input type='text' value='' style='font-size: 1vw;text-align:left;height: 8vw;border-radius: 0.3vw'  placeholder='Description' class='edit-name cat'></div>" + "<div class='edit-container' style='height: 3vw;'><input type='text' placeholder='Add file' class='edit-name cat' style='padding-left: 2vw;background-image: url(\"../asserts/icons/add.png\");background-repeat: no-repeat;background-size: 1vw;height2vw;background-position: 0 50%;width: 80%'></div>"
     editbox.innerHTML += reminder
-
 
 
     prevId = id;
@@ -33,11 +43,12 @@ function resize(id) {
 }
 
 function done(id) {
-    let data=xmlrequest('data='+id,'done.php',1,1)
+    let data = xmlrequest('data=' + id, 'done.php', 1, 1)
     updateTask(id, data['done'])
 }
 
 function updateTask(id, code) {
+    console.log(1);
     let radio = document.querySelectorAll('#check' + id);
     let task = document.getElementById(id);
     if (code === '0') {
@@ -49,8 +60,8 @@ function updateTask(id, code) {
             r.className = 'check';
         task.className = '';
     }
-    xmlrequest('data='+id+'&code='+code,'done.php',0,0)
-
+    xmlrequest('done=' + id + '&code=' + code, 'done.php', 0, 0)
+    console.log(data);
 }
 
 function search_in() {
@@ -168,16 +179,34 @@ function add_task(type) {
     console.log("send");
     let task = document.getElementById('input' + type).value;
     xmlrequest('add=' + type + '&task=' + task, 'done.php', 0, 0)
+    setCount()
     setActive(parseInt(getCookie('tab_new')));
 }
 
 
-var page = 1
+function get_pagination_pages() {
+    let ans=[];
+    for (let i=0;i<TYPES;i++ ){
+        let pages = xmlrequest("get=pages&type="+i , 'done.php', 1, 0)
+        ans.push(pages)
+    }
+    return ans
+}
 
-function paginationF() {
-    page += 1;
-    let tasks = xmlrequest("page=" + page, 'done.php', 1, 0)
-    console.log(tasks)
+function getCountTasks(type) {
+    let count = xmlrequest('count=' + type, 'done.php', 1, 1)
+    return count['COUNT(*)']
+}
+
+
+function getPage(type,page) {
+    if(parseInt(pages[type])>=page && page>0){
+        let tasks=xmlrequest('get=pageno&pageno='+page+"&type="+type,'done.php',1,0)
+        let div=document.getElementById('main')
+        div.innerHTML=tasks
+    }
+    else
+        console.log('error')
 }
 
 

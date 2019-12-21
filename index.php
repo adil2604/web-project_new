@@ -24,7 +24,7 @@ if (isset($_COOKIE['hash'])){
                <p >Do It Now!</p>
                <div class="links">
                    <a href="#">Home</a>
-                   <a href="#about">About</a>
+                   <a href="/about">About</a>
                    <a href="#contacts">Contacts</a>
                </div>
                <button id="start" class="start">Get Started!</button>

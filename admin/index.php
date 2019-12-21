@@ -18,6 +18,13 @@ if (!$user['admin']){
 <?php
 include '../asserts/templates/navbar.php';
 ?>
+<div class="modal">
+    <div class="modal-content">
+        <span class="close-button">×</span>
+        <h1>Are you sure?</h1>
+        <button style="border: 0;width: 8vw;height: 3vw;font-family: 'Solway', serif;font-size: 1.5vw">Yes!</button>
+    </div>
+</div>
 <div class="admin-main">
     <div class="admin-box">
 

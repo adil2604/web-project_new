@@ -33,8 +33,6 @@ if (isset($_GET['logout'])) {
     <div class="profile-box">
         <div class="main">
             <?php
-
-
             ?>
             <div class="image" <?php if ($userdata['image_path'] == '') {echo "style='background-image: url(\"../asserts/images/proflie.png\");'";} ?>>
                 <?php if ($userdata['image_path'] != '') {
@@ -62,10 +60,10 @@ if (isset($_GET['logout'])) {
                     <input id='surname' value="<?php echo $userdata['user_surname']?>" type='text'></div>
                 <div class="email"><div>Change password:</div>  <section class="pass"><input type="text" id="pass" placeholder="current password"><br><input type="text" id="newPass" placeholder="new password"></section></div>
                 <button type="button" id="save"  onclick="save()">Save</button>
-                <a href="?logout=1">Log Out</a>
+                <a id="logout" href="?logout=1">Log Out</a>
                 <?php
                 if ($userdata['admin'])
-                    echo " <a href='../admin'>Admin panel</a>"
+                    echo " <a id='admin' href='../admin'>Admin panel</a>"
                 ?>
                 <div id="error" class="error"></div>
 

@@ -1,11 +1,12 @@
 @import url('https://fonts.googleapis.com/css?family=Josefin+Sans:400,600&display=swap');
 
+@import url('https://fonts.googleapis.com/css?family=Solway&display=swap');
 
 html,body,.profile-box{
     width: 100%;
     height: 100%;
     margin:0;
-    font-family: 'Josefin Sans', sans-serif;
+    font-family: 'Solway', sans-serif;
 
 }
 .content{
@@ -56,6 +57,7 @@ html,body,.profile-box{
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+    position: relative;
 }
 .email{
     font-size: 1.4vw;
@@ -77,7 +79,7 @@ html,body,.profile-box{
     border-bottom: 1px solid rgba(0,0,0,0.4);
     width: 10vw;
     height: 50%;
-    font-family: 'Josefin Sans', sans-serif;
+    font-family: 'Solway', sans-serif;
 }
 .upload-btn-wrapper {
     margin: 7vw;
@@ -98,7 +100,7 @@ html,body,.profile-box{
     width: 100%;
     border: 1px solid gray;
     color: black;
-    font-family: 'Josefin Sans', sans-serif;
+    font-family: 'Solway', sans-serif;
     background-color: white;
     padding: 8px 20px;
     border-radius: 8px;
@@ -113,5 +115,34 @@ html,body,.profile-box{
     left: 0;
     top: 0;
     opacity: 0;
+
+}
+#save{
+    border: 0;
+    background-color: #0078D7;
+    color: white;
+    font-family: 'Solway', sans-serif;
+    font-size: 1.5vw;
+    width: 80%;
+    margin: 0 auto 0 auto;
+    border-radius: 0.3vw;
+    height: 2.2vw ;
+}
+a{
+    border: 0;
+    font-family: 'Solway', sans-serif;
+    font-size: 1vw;
+    width: 15%;
+
+    border-radius: 0.3vw;
+    height: 1.5vw ;
+}
+#logout,#admin{
+    position: absolute;
+    left: -38%;
+    top: 60%;
+}
+#admin{
+    top: 65%;
 
 }
