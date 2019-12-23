@@ -1,16 +1,16 @@
 let prevId = null;
 let prevTab = null;
-let TYPES=3;
+let TYPES = 3;
 const tabs = document.querySelectorAll('.tabs-box button');
 setActive(parseInt(getCookie('tab_new')));
 setCount();
-let pages=get_pagination_pages();
+let pages = get_pagination_pages();
 console.log(pages);
 
 function setCount() {
     let tabs = [document.getElementById('important-count'), document.getElementById('today-count'), document.getElementById('planned-count')]
-    for(let i=0;i<tabs.length;i++){
-        tabs[i].innerHTML=getCountTasks(i)
+    for (let i = 0; i < tabs.length; i++) {
+        tabs[i].innerHTML = getCountTasks(i)
     }
 }
 
@@ -36,6 +36,8 @@ function resize(id) {
     editbox.innerHTML += name;
     let reminder = "<div class='edit-container' style='display: flex;flex-direction: column'><input type='text' value=''  placeholder='Reminder' onfocus=\"(this.type='date')\"  class='edit-name cat'><input type='text' value='' style='font-size: 1vw;text-align:left;height: 8vw;border-radius: 0.3vw'  placeholder='Description' class='edit-name cat'></div>" + "<div class='edit-container' style='height: 3vw;'><input type='text' placeholder='Add file' class='edit-name cat' style='padding-left: 2vw;background-image: url(\"../asserts/icons/add.png\");background-repeat: no-repeat;background-size: 1vw;height2vw;background-position: 0 50%;width: 80%'></div>"
     editbox.innerHTML += reminder
+    let btn = "<div class='edit-container' style='display: flex;flex-direction: column'><button onclick='deleteTask(" + id + ")'>Delete</button></div>"
+    editbox.innerHTML += btn
 
 
     prevId = id;
@@ -61,7 +63,6 @@ function updateTask(id, code) {
         task.className = '';
     }
     xmlrequest('done=' + id + '&code=' + code, 'done.php', 0, 0)
-    console.log(data);
 }
 
 function search_in() {
@@ -185,9 +186,9 @@ function add_task(type) {
 
 
 function get_pagination_pages() {
-    let ans=[];
-    for (let i=0;i<TYPES;i++ ){
-        let pages = xmlrequest("get=pages&type="+i , 'done.php', 1, 0)
+    let ans = [];
+    for (let i = 0; i < TYPES; i++) {
+        let pages = xmlrequest("get=pages&type=" + i, 'done.php', 1, 0)
         ans.push(pages)
     }
     return ans
@@ -199,16 +200,22 @@ function getCountTasks(type) {
 }
 
 
-function getPage(type,page) {
-    if(parseInt(pages[type])>=page && page>0){
-        let tasks=xmlrequest('get=pageno&pageno='+page+"&type="+type,'done.php',1,0)
-        let div=document.getElementById('main')
-        div.innerHTML=tasks
-    }
-    else
+function getPage(type, page) {
+    if (parseInt(pages[type]) >= page && page > 0) {
+        let tasks = xmlrequest('get=pageno&pageno=' + page + "&type=" + type, 'done.php', 1, 0)
+        let div = document.getElementById('main')
+        div.innerHTML = tasks
+    } else
         console.log('error')
 }
 
+function deleteTask(id) {
+    let data = xmlrequest('delete=' + id, 'done.php', 1, 0)
+    let task=document.getElementById('id'+id);
+    console.log(task)
+    task.style.display='none';
+    setCount()
+}
 
 
 

@@ -28,7 +28,12 @@ if (isset($_POST['data'])) {
     $query = mysqli_query($link, "SELECT * FROM `tasks` WHERE user_id=$user_id AND id=$id");
     echo json_encode(mysqli_fetch_array($query));
 }
-
+if(isset($_POST['delete'])){
+    $id=$_POST['delete'];
+    $sql="DELETE FROM `tasks` WHERE `tasks`.`id` = $id";
+    $query=mysqli_query($link,$sql);
+    echo $query;
+}
 
 if (isset($_POST['done'])) {
     $id = $_POST['done'];
@@ -115,7 +120,7 @@ function set_tasks($tasks, $cnt, $id = 0, $search = false)
             }
 
 
-            $data .= "<div class='task'><div class='$class'  id='check" . $rows['id'] . "' onclick='done(" . $rows['id'] . ")'></div><button type='button' class='$btn' id=" . $rows['id'] . " onclick='resize(" . $rows['id'] . ")'>" . $rows['task'] . "</button></div>";
+            $data .= "<div class='task' id='id".$rows['id']."' ><div class='$class'  id='check" . $rows['id'] . "' onclick='done(" . $rows['id'] . ")'></div><button type='button' class='$btn' id=" . $rows['id'] . " onclick='resize(" . $rows['id'] . ")'>" . $rows['task'] . "</button></div>";
             $cnt--;
         }
         if (!$search && $cnt > 1) {
